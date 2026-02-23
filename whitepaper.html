@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>builderOS: A Protocol for Human-AI Coordination at Company Scale</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --text-secondary: #555;
+            --accent: #1a1a1a;
+            --border: #e0e0e0;
+            --code-bg: #f5f5f5;
+            --blockquote-border: #ccc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 24px 120px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1em;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-top: 56px;
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        h3 {
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-top: 36px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        strong {
+            font-weight: 700;
+        }
+
+        ul, ol {
+            margin-bottom: 16px;
+            padding-left: 28px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+            font-size: 0.82em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .day-section p {
+            margin-bottom: 14px;
+        }
+
+        .day-section p strong {
+            font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .principles p {
+            margin-bottom: 14px;
+        }
+
+        .changes p {
+            margin-bottom: 14px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 48px 0;
+        }
+
+        .abstract {
+            font-size: 1.05em;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--blockquote-border);
+            padding-left: 20px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                font-size: 16px;
+                padding: 32px 16px 80px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>builderOS</h1>
+    <p class="subtitle">A Protocol for Human-AI Coordination at Company Scale</p>
+    <p style="color: var(--text-secondary); margin-bottom: 32px;">@tferrer &nbsp;<span style="font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 0.85em;">2026-02-22</span></p>
+
+    <div class="abstract">
+        <p>builderOS is a protocol for coordinating human and AI work. It uses a structured local directory as the single source of truth for an individual's projects, priorities, career, and tools. An AI agent operates within that directory, managing context, enforcing prioritization, syncing work to the cloud, and surfacing what matters. At individual scale, it eliminates meta-work. At team scale, it kills silos and duplicate effort. At company scale, it turns decisions and outcomes into shared, machine-readable operational memory. The goal is simple: spend less time on work about the work, and more time building for our customers.</p>
+    </div>
+
+    <hr>
+
+    <h2>1. The Problem</h2>
+
+    <p>Knowledge workers spend a staggering amount of time on work about work. Status updates. Context switching between five projects and twelve Slack channels. Preparing for meetings that exist because nobody knows what anyone else is doing. Writing performance reviews from memory months after the work happened. Chasing down whether another team already tried what you're about to build.</p>
+
+    <p>None of this is the work itself. The work itself is thinking, building, and shipping. But the coordination tax is so high that deep focus becomes the exception, not the norm. The tools we adopted to fix this made it worse. Slack created an always-on interruption stream. Docs and wikis became graveyards nobody maintains. Jira tickets describe intent, not outcome. Performance reviews reward narrative skill over actual impact.</p>
+
+    <p>The root cause is simple: there is no structured, machine-readable record of what people are working on, what they've built, and what they've learned. Everything lives in people's heads, scattered across apps, or buried in threads. Coordination is manual. Prioritization is gut feel. Visibility is performative.</p>
+
+    <h2>2. What is builderOS</h2>
+
+    <p>builderOS is not an app. It is a protocol: a specification for how to organize knowledge work so that both humans and AI agents can operate on it.</p>
+
+    <p>The core idea: your work lives in a structured local directory. That directory contains everything. Your identity, your projects, your priorities, your career evidence, your tools. An AI agent reads and writes to that directory as you work. The structure is the interface.</p>
+
+    <div class="principles">
+        <p><strong>One session, one focus.</strong> You work on one thing at a time. The agent knows your full queue and enforces prioritization. If you try to wander, it pushes back. If the world changes, it adjusts.</p>
+
+        <p><strong>Work writes itself down.</strong> Every query you run, every document you write, every meeting you attend gets captured in the project it belongs to. Progress is tracked automatically. You never reconstruct what you did from memory.</p>
+
+        <p><strong>Structure enables coordination.</strong> Because the directory follows a shared schema, any agent (yours or a teammate's) can read it. Visibility is not a meeting or a status update. It is a file read.</p>
+    </div>
+
+    <h2>3. How It Works</h2>
+
+    <h3>The Seed</h3>
+
+    <p>You initialize builderOS with a context file. This is your seed. It contains:</p>
+
+    <ul>
+        <li>Your identity (name, role, level, team)</li>
+        <li>Your scope definition (what you own)</li>
+        <li>Your relationships (manager, teammates, stakeholders)</li>
+        <li>Your value function (what you are trying to achieve)</li>
+    </ul>
+
+    <p>The agent reads this file first, every session. It grounds every decision in who you are and what matters to you.</p>
+
+    <h3>The Directory</h3>
+
+    <p>The directory has three top-level folders:</p>
+
+<pre>&lt;your-ldap&gt;-os/
+  context.md          # The seed: identity, scope, relationships, value function
+  queue.md            # Prioritized task list with scoring
+  projects/
+    &lt;project-name&gt;/
+      project.md      # Purpose, links, decisions, status
+      alignment/      # Meeting notes for this project
+      ...             # All artifacts: queries, docs, dashboards, designs
+  career/
+    progress/         # Weekly files tracking what you shipped
+    feedback/         # Received feedback and performance reviews
+    contributions.md  # Non-project evidence (mentorship, culture, etc.)
+    alignment/        # Notes with manager and skip-level
+  tools/
+    mcps/             # MCP server configs and integrations
+    ...               # Channels, modes, utilities</pre>
+
+    <h3>Projects</h3>
+
+    <p>Each project is a folder. Inside that folder lives everything related to it: the project definition, meeting notes, SQL queries, documents, dashboards, designs. If an artifact belongs to a project, it lives in that project's folder. No exceptions.</p>
+
+    <p>All work is synchronized with the cloud. When you write a query in Mode, it gets backed up locally. When you create a doc, the agent keeps a local copy. The directory is the canonical record.</p>
+
+    <h3>The Queue</h3>
+
+    <p>The queue is a scored list of everything you need to do. Each item is evaluated on:</p>
+
+    <ul>
+        <li><strong>Urgency.</strong> Is there a deadline? How close?</li>
+        <li><strong>Importance.</strong> Does this advance your most critical goals?</li>
+        <li><strong>Difficulty.</strong> How much focused effort does this require?</li>
+        <li><strong>Delegability.</strong> Are you the only person who can do this?</li>
+    </ul>
+
+    <p>The agent manages the queue dynamically. As tasks are completed, they move to the weekly progress file. As new asks come in (from Slack, email, meetings), they get scored and placed. The queue is never static.</p>
+
+    <h3>The Heartbeat</h3>
+
+    <p>The agent connects to Slack and Gmail through background processes that poll periodically. When something comes in, the agent evaluates it: is this worth interrupting deep work, or can it go to the queue?</p>
+
+    <p>A mention from your manager about a critical deliverable triggers a notification. A routine question from another team gets queued silently. The agent triages so you don't have to. You check your interruption stream at natural breakpoints, not constantly.</p>
+
+    <h3>Meeting Ingestion</h3>
+
+    <p>Before a meeting, the agent prepares you. It pulls relevant project context, recent decisions, and open questions so you walk in ready.</p>
+
+    <p>During the meeting, transcription runs (Gemini Notes or equivalent). After the meeting, the summary is sent via email. The agent reads the email, extracts the summary, and files it in the correct alignment folder, either under the project or under career if it was a manager sync.</p>
+
+    <p>The project context file gets updated. Decisions are captured. You never manually write meeting notes.</p>
+
+    <h3>Daily Cycle</h3>
+
+    <p>Morning: you start a session. The agent reads your queue, checks overnight signals (Slack, email), and proposes your day. It creates time blocks on your calendar for your highest-priority work.</p>
+
+    <p>During the day: you work one project at a time, in a single terminal session. The agent has full project context. If you finish early, it pulls the next item. If you get blocked, you tell the agent why. It adjusts your calendar, reprioritizes, and gives you constructive feedback on what slowed you down.</p>
+
+    <p>End of day: the agent compiles everything you did into a progress entry. It asks if there is anyone you should recognize for their work today. It updates the queue for tomorrow.</p>
+
+    <h3>Career Tracking</h3>
+
+    <p>The career folder builds your promotion case in real time. Weekly progress files accumulate automatically. Feedback from peers and reviews lives in one place. Non-project contributions (mentoring, culture work, cross-team help) are logged in a contributions file.</p>
+
+    <p>When review season comes, you don't reconstruct six months from memory. You read your files. The evidence is already there, and it's factual, not narrative.</p>
+
+    <h2>4. Team Scale</h2>
+
+    <p>If one person runs builderOS, they get focus and structure. If a team runs it, the leverage compounds.</p>
+
+    <h3>Shared Visibility</h3>
+
+    <p>Because every directory follows the same schema, context files are machine-readable. An agent can scan the project folders of every team member and answer: what is everyone working on right now? Are there overlaps? Are there dependencies?</p>
+
+    <p>This is not a dashboard someone has to maintain. It is a direct read of actual work. The information is always current because it is a byproduct of doing the work, not a separate reporting step.</p>
+
+    <h3>Killing Duplicate Work</h3>
+
+    <p>Today, two people on different teams can spend weeks building the same thing without knowing it. With builderOS, a simple scan across directories surfaces overlaps. Before you start a new project, you can check: has this been tried before? What did we learn? Who has context?</p>
+
+    <h3>Shared Project Context</h3>
+
+    <p>When multiple people work on the same project, they share a context file. Every insight, every decision, every artifact is visible to everyone on the project. There is less concern about format or structure. Findings can be dumped into context. The agent organizes it. Everyone is always up to date.</p>
+
+    <h3>Transfers and Onboarding</h3>
+
+    <p>When someone goes on leave, changes teams, or a new person joins, the handoff is a directory. The new person's agent scans the project files, reads the context, reviews the alignment history, and gets them up to speed. No more two-week knowledge transfer meetings. No more institutional knowledge walking out the door.</p>
+
+    <h2>5. Company Scale</h2>
+
+    <h3>Shared Ontology</h3>
+
+    <p>At company scale, builderOS can be extended with a shared ontology: a structured timeline of events and facts that matter. App version 5.4 shipped on August 15th with these changes. A policy changed on this date. A critical incident happened here.</p>
+
+    <p>This makes debugging faster (what changed before things broke?) and gives every agent across the company access to the same ground truth.</p>
+
+    <h3>Performance Metrics</h3>
+
+    <p>Because all work is tracked, we can measure what actually matters. How much time goes to deep work vs. coordination? What blocks people most often? Where do projects stall? Which teams ship fastest and why?</p>
+
+    <p>Performance review becomes immediate, fair, and transparent. It is driven by evidence, not by who writes the best self-review or who has the most visibility with leadership. The data is already there.</p>
+
+    <h3>Cross-Organization Coordination</h3>
+
+    <p>With structured, machine-readable work across the company, coordination problems that currently require meetings, committees, and program managers become queries. What is every team building this quarter? Where are the dependencies? Where are the conflicts? An agent can answer these questions in seconds by reading directories.</p>
+
+    <h2>6. What Changes</h2>
+
+    <div class="changes">
+        <p><strong>Every week is deep work week.</strong> You work on one thing at a time. You don't juggle eleven threads. The agent handles triage and prioritization so you can focus on the actual work.</p>
+
+        <p><strong>You build in public by default.</strong> Not as surveillance, but as clarity. It is obvious what people are building, what they've tried, what they've learned. Duplication dies. Synergy becomes possible because the information is actually accessible.</p>
+
+        <p><strong>Meetings become optional.</strong> The coordination that meetings were supposed to provide happens through shared context files. You still meet when you need human judgment, debate, or relationship-building. But you stop meeting to exchange status.</p>
+
+        <p><strong>Performance reviews write themselves.</strong> Weekly progress accumulates all year. Feedback is captured in real time. When review season arrives, the evidence is already organized, factual, and complete.</p>
+
+        <p><strong>Transfers stop being traumatic.</strong> Institutional knowledge lives in files, not heads. Onboarding a new team member means pointing their agent at the directory.</p>
+
+        <p><strong>You do what you're best at.</strong> Critical thinking. Creativity. Taste. Judgment. The meta-work that eats your day (status updates, meeting notes, performance narratives, figuring out what to work on) is handled by the protocol. You focus on creating.</p>
+    </div>
+
+    <h2>7. Implementation</h2>
+
+    <h3>What Exists Today</h3>
+
+    <p>builderOS is not a concept deck. It is running in production on a real job.</p>
+
+    <p>The current implementation is a TUI (terminal user interface) powered by Claude Code. It boots from a seed context file and operates within the directory structure described in this paper. The following components are functional:</p>
+
+    <ul>
+        <li><strong>Seed boot.</strong> A context file initializes the agent with identity, scope, relationships, and value function.</li>
+        <li><strong>Project management.</strong> Projects as directories with full artifact tracking, local backup of cloud documents, and context files.</li>
+        <li><strong>Queue management.</strong> Scored task list with dynamic reprioritization and automatic progress tracking.</li>
+        <li><strong>Meeting ingestion.</strong> Gemini Notes transcription, email pickup, automatic filing to alignment folders, context updates.</li>
+        <li><strong>Slack and email heartbeat.</strong> Background polling with intelligent triage: interrupt for critical items, queue everything else.</li>
+        <li><strong>Daily planning.</strong> Calendar time-blocking based on queue priorities, live adjustment when plans change.</li>
+        <li><strong>Career tracking.</strong> Weekly progress files, feedback aggregation, contribution logging.</li>
+        <li><strong>Git tracking.</strong> The full directory is version-controlled. Every change is traceable.</li>
+        <li><strong>MCP integrations.</strong> Connected to Snowflake, Mode, Slack, Gmail, Google Calendar, Google Drive, Google Slides, Figma, and more.</li>
+    </ul>
+
+    <h3>What's Next</h3>
+
+    <ul>
+        <li><strong>Team coordination layer.</strong> Cross-directory reads for shared visibility, overlap detection, and dependency mapping.</li>
+        <li><strong>Shared ontology.</strong> Company-wide timeline of events, launches, and facts.</li>
+        <li><strong>Protocol specification.</strong> A formal schema so any agent framework can implement builderOS, not just Claude Code.</li>
+        <li><strong>Performance analytics.</strong> Aggregated metrics on deep work time, blockers, and throughput across teams.</li>
+    </ul>
+
+    <h2>8. Closing</h2>
+
+    <p>The way we work today was designed for a world without AI. We coordinate through meetings because context is trapped in people's heads. We write status updates because nobody can see what anyone else is doing. We spend review season reconstructing six months of work from memory because nothing was captured in real time.</p>
+
+    <p>builderOS starts from a different premise: if work is structured and machine-readable from the moment it happens, most of the coordination overhead disappears. The agent handles triage, tracking, and context management. The human handles thinking, building, and deciding.</p>
+
+    <p>This is not about replacing people with AI. It is about removing the tax on human attention so that people can do what they are actually good at. Critical thinking. Creativity. Taste. The things no agent can replicate.</p>
+
+    <p>We stop doing work about the work. We start building.</p>
+
+    <hr>
+
+    <p style="color: var(--text-secondary); margin-top: 48px;">Tom Ferrer<br>tferrer@block.xyz</p>
+
+</body>
+</html>
