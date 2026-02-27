@@ -54,5 +54,3 @@ builderOS uses a structured local directory as the single source of truth for yo
 ## Status
 
 This is a working implementation, not a concept. The protocol is running on a real job today.
-
-Hack Week 2026.
